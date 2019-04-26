@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="generadorCodigoDML:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/generadorCodigoDML_jar</output-path>
+    <output-path>C:/Tarea1ci1322/</output-path>
     <root id="archive" name="generadorCodigoDML.jar">
       <element id="module-output" name="generadorCodigoDML" />
     </root>
