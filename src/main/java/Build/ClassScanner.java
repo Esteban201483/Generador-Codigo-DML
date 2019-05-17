@@ -1,19 +1,14 @@
-package ModelPrueba;
-
+package Build;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.LinkedList;
 import java.util.List;
 
-@Table(name = "Prueba")
-
-public class ClasePrueba {
-
+public class ClassScanner {
 
     List<Class> scanClasses(String projectPackage)
     {
