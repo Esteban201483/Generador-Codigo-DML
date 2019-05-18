@@ -1,3 +1,8 @@
+/**
+ * ClassScanner
+ * Finds all the model class with the Entity Annotation
+ */
+
 package Build;
 
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -10,6 +15,11 @@ import java.util.List;
 
 public class ClassScanner {
 
+    /**
+     * Search all the classes in the project package with the entity annotation
+     * @param projectPackage The package where to search the model class
+     * @return a List with all the classes with Entity annotation. It can be empty!
+     */
     List<Class> scanClasses(String projectPackage)
     {
         List<Class> projectClasses = new LinkedList<Class>();
@@ -17,9 +27,9 @@ public class ClassScanner {
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
         provider.addIncludeFilter(new AnnotationTypeFilter(Entity.class));
 
+        //Uses the providr filter to search all the clases with Entity annotation
         for(BeanDefinition beanDef: provider.findCandidateComponents(projectPackage))
         {
-
             try {
                 Class<?> cl = Class.forName(beanDef.getBeanClassName());
                 System.out.println("Class Detected: " + cl.getName());
@@ -32,5 +42,4 @@ public class ClassScanner {
         }
         return projectClasses;
     }
-
 }

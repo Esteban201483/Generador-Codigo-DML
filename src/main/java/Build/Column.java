@@ -18,7 +18,7 @@ public class Column {
 
     public Column()
     {
-
+        name = "";
     }
 
     /**

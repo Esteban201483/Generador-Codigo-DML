@@ -3,6 +3,9 @@ package Build;
 import javax.xml.bind.ValidationException;
 import java.util.List;
 
+/**
+ * Controls all the process
+ */
 public class Controller {
 
     DataBaseConfiguration dataBaseConfiguration;
