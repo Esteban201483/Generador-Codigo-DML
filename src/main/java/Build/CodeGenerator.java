@@ -2,29 +2,32 @@ package Build;
 
 
 public class CodeGenerator {
-    Controller mainController;
-    DataBaseConfiguration dataBaseConfiguration;
-    FileConfiguration fileConfiguration;
+    private Controller mainController;
+    private DataBaseConfiguration dataBaseConfiguration;
+    private FileConfiguration fileConfiguration;
 
-    CodeGenerator(DataBaseConfiguration dataBaseConfiguration, FileConfiguration fileConfiguration)
+    public CodeGenerator(DataBaseConfiguration dataBaseConfiguration, FileConfiguration fileConfiguration)
     {
         this.dataBaseConfiguration = dataBaseConfiguration;
         this.fileConfiguration = fileConfiguration;
     }
 
-    CodeGenerator(FileConfiguration fileConfiguration)
+    public CodeGenerator(FileConfiguration fileConfiguration)
     {
         this.fileConfiguration = fileConfiguration;
     }
 
-    CodeGenerator(DataBaseConfiguration dataBaseConfiguration)
+    public CodeGenerator(DataBaseConfiguration dataBaseConfiguration)
     {
         this.dataBaseConfiguration = dataBaseConfiguration;
     }
 
-    void generateDML()
+    public void generateDML()
     {
+        //Sends the configuration variables to the controller
+        mainController = new Controller(dataBaseConfiguration, fileConfiguration);
 
+        mainController.startCodeGeneration();
     }
 
 

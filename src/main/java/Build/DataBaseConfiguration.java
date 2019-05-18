@@ -7,6 +7,14 @@ public class DataBaseConfiguration extends Configuration {
     private boolean mySQLCode;
     private boolean postgreSQL;
 
+    public DataBaseConfiguration()
+    {
+        userName = "";
+        password = "";
+        mySQLCode = false;
+        postgreSQL = false;
+    }
+
     public String getUserName() {
         return userName;
     }

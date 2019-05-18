@@ -22,7 +22,7 @@ public class ClassScanner {
 
             try {
                 Class<?> cl = Class.forName(beanDef.getBeanClassName());
-                System.out.println("Class Find: " + cl.getName());
+                System.out.println("Class Detected: " + cl.getName());
                 projectClasses.add(cl);
             }
             catch(ClassNotFoundException e)
