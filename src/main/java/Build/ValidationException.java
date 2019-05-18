@@ -1,6 +1,6 @@
 package Build;
 
-public class ValidationException {
+public class ValidationException extends  Exception {
     String message;
 
     public ValidationException(String message) {
@@ -14,6 +14,7 @@ public class ValidationException {
     public void setMessage(String message) {
         this.message = message;
     }
+
 
 
 }

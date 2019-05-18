@@ -1,5 +1,6 @@
 package Build;
 
+import javax.xml.bind.ValidationException;
 import java.util.List;
 
 public class Controller {
@@ -39,6 +40,7 @@ public class Controller {
     void startCodeGeneration() {
         String projectPackage = "";
         List<Class> classList;
+        outputViewer = new OutputViewer();
 
         if (dataBaseConfiguration != null) {
             projectPackage = dataBaseConfiguration.getProjectPackage();
@@ -57,7 +59,14 @@ public class Controller {
     void  validateClasses(List<Class> projectClasses)
     {
         validator = new ClassValidator(projectClasses);
-        IRList =  validator.startValidation();
+
+        try {
+            IRList = validator.startValidation();
+        }
+        catch(ValidationException exception)
+        {
+            outputViewer.printMessage(exception.getMessage());
+        }
 
         System.out.println("Ready");
     }
