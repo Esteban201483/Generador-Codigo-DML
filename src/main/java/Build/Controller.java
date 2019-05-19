@@ -65,12 +65,14 @@ public class Controller {
 
         try {
             IRList = validator.startValidation();
+            outputViewer.printMessage("Ready");
         }
         catch(ValidationException exception)
         {
             outputViewer.printMessage(exception.getMessage());
+            outputViewer.printMessage("Cancelling DML Generation...");
         }
 
-        System.out.println("Ready");
+
     }
 }

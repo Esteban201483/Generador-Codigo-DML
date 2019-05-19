@@ -64,7 +64,7 @@ public class ClassValidator {
                 System.out.println("New Field!");
                 Build.Column newColumn = new Build.Column();
 
-
+                //Search all the annotations in the actual field
                 for(Annotation annotation : field.getDeclaredAnnotations())
                 {
 
@@ -75,10 +75,10 @@ public class ClassValidator {
                         columnRequired = true;
                         isPrimaryKey = true;
                     }
-                    if(annotation.annotationType().getSimpleName().equals("Column"))
+                    else if(annotation.annotationType().getSimpleName().equals("Column"))
                     {
                         Column columnAnnotation = (Column) annotation;
-
+                        System.out.println("CD " + columnAnnotation.length());
                         newColumn.setLength(columnAnnotation.length());
                         newColumn.setName(columnAnnotation.name());
                         newColumn.setScale("" + columnAnnotation.scale());
@@ -87,15 +87,19 @@ public class ClassValidator {
                         System.out.println("Column Found: " + columnAnnotation.name() + "!");
                         columnRequired = true;
                     }
-                    if(annotation.annotationType().getSimpleName().equals("Lob"))
+                    else if(annotation.annotationType().getSimpleName().equals("Lob"))
                     {
                         System.out.println("LOB Found in column : " + newColumn.getName() + "!");
                         columnRequired = true;
                     }
-                    if(annotation.annotationType().getSimpleName().equals("Enumerated"))
+                    else if(annotation.annotationType().getSimpleName().equals("Enumerated"))
                     {
                         System.out.println("Enumerated Found in column : " + newColumn.getName() + "!");
                         columnRequired = true;
+                    }
+                    else
+                    {
+                        throw new ValidationException("Error: Class " + projectClass.getName() +  " contains unknown " + annotation.annotationType().getSimpleName() + " annotation ");
                     }
                 }//Annotation search end
 
@@ -106,6 +110,7 @@ public class ClassValidator {
                         throw new ValidationException("Error: Class " + projectClass.getName() + " doesn't contain a required column annotation");
                     else {
 
+                        //Isolates the primaryKey from the other columns
                         if(!isPrimaryKey)
                             columnList.add(newColumn);
                         else {

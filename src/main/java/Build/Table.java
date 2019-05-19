@@ -76,7 +76,7 @@ public class Table implements Entity {
 
         for(Column c : columnList)
         {
-            System.out.println(c.getName());
+            System.out.println(c.getName()+ "length: " + c.getLength());
         }
 
 
