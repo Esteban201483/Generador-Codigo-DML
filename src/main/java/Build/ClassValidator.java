@@ -62,6 +62,7 @@ public class ClassValidator {
             primaryKey = null;
             System.out.println("Scanning: " + projectClass.getName());
             Field[] fields =  projectClass.getDeclaredFields();
+            String columnName="";
 
             //Obtains all the fields
             for(Field field : fields){
@@ -95,6 +96,7 @@ public class ClassValidator {
                         //Falta el tipo!!!
                         System.out.println("Column Found: " + columnAnnotation.name() + "!");
                         columnRequired = true;
+                        columnName = columnAnnotation.name();
                     }
                     else if(annotation.annotationType().getSimpleName().equals("Lob"))
                     {
@@ -192,7 +194,9 @@ public class ClassValidator {
                 r.setMappedBy(mappedBy);
                 relationList.add(r);
                 r.setTable1(newTable);
-            }
+                r.setTable2name(secondRelation);
+                r.setColumn1(columnName);
+                }
 
         }
 

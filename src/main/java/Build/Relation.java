@@ -4,6 +4,26 @@ public class Relation implements Entity {
 
     Entity table1;
     Entity table2;
+    String table2name;//
+    String column1;
+    String column2;
+
+    public String getColumn1() {
+        return column1;
+    }
+
+    public void setColumn1(String column1) {
+        this.column1 = column1;
+    }
+
+    public String getTable2name() {
+        return table2name;
+    }
+
+    public void setTable2name(String table2name) {
+        this.table2name = table2name;
+    }
+
     String type;
     String mappedBy;
 
