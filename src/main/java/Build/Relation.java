@@ -63,6 +63,8 @@ public class Relation implements Entity {
 
     public String getCode()
     {
+        System.out.println("Relation: " + table1.getCode() + " y " + table2name);
         return "";
+
     }
 }

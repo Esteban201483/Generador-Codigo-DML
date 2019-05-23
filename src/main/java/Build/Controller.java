@@ -56,6 +56,11 @@ public class Controller {
         //Checks errors in the classes. If there isn't any error, then generate IR
         validateClasses(classList);
 
+        System.out.println("Processing IR");
+
+
+        SQLScriptGeneratorImp mySQLGenerator = new SQLScriptGeneratorImp(IRList);
+
     }
 
 

@@ -63,6 +63,7 @@ public class ClassValidator {
             System.out.println("Scanning: " + projectClass.getName());
             Field[] fields =  projectClass.getDeclaredFields();
             String columnName="";
+            String relationType = "";
 
             //Obtains all the fields
             for(Field field : fields){
@@ -113,7 +114,7 @@ public class ClassValidator {
                         isRelation=true;
                         OneToOne  oneToOne = (OneToOne) annotation;
                         mappedBy=oneToOne.mappedBy();
-
+                        relationType = "OneToOne";
 
                     }
                     else if(annotation.annotationType().getSimpleName().equals("OneToMany"))
@@ -121,23 +122,30 @@ public class ClassValidator {
                         isRelation=true;
                         OneToMany oneToMany = (OneToMany) annotation;
                         mappedBy=oneToMany.mappedBy();
+                        relationType = "OneToMany";
                     }
                     else if(annotation.annotationType().getSimpleName().equals("ManyToOne"))
                     {
                         isRelation=true;
                         ManyToOne manyToOne = (ManyToOne) annotation;
                         //mappedBy=manyToOne.mappedBy();
+                        relationType = "ManyToOne";
                     }
                     else if(annotation.annotationType().getSimpleName().equals("ManyToMany"))
                     {
                         isRelation=true;
                         ManyToMany manyToMany = (ManyToMany) annotation;
                         mappedBy=manyToMany.mappedBy();
+                        relationType = "ManytoMany";
                     }
                     else if(annotation.annotationType().getSimpleName().equals("JoinColumn"))
                     {
                        JoinColumn joinColumn= (JoinColumn) annotation;
-                       secondRelation= joinColumn.table();
+                    }
+                    else if(annotation.annotationType().getSimpleName().equals("JoinTable"))
+                    {
+                        JoinTable joinColumn= (JoinTable) annotation;
+                        secondRelation= joinColumn.name();
                     }
                     else
                     {
@@ -196,7 +204,11 @@ public class ClassValidator {
                 r.setTable1(newTable);
                 r.setTable2name(secondRelation);
                 r.setColumn1(columnName);
-                }
+                r.setType(relationType);
+
+                //Temporal
+                entityList.add(r);
+            }
 
         }
 
@@ -205,6 +217,19 @@ public class ClassValidator {
         {
             if(e.getType().equals("Table"))
                 e.getCode();
+        }
+
+        System.out.println("*******************");
+
+        System.out.println("Relations:");
+        //Temporal. Prints all the relations in the IR
+
+        for(Entity e: entityList)
+        {
+            if(!e.getType().equals("Table"))
+            {
+                e.getCode();
+            }
         }
 
         return entityList;
