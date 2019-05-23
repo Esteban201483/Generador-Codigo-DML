@@ -4,6 +4,20 @@ public class Relation implements Entity {
 
     Entity table1;
     Entity table2;
+    String type;
+    String mappedBy;
+
+    public String getMappedBy() {
+        return mappedBy;
+    }
+
+    public void setMappedBy(String mappedBy) {
+        this.mappedBy = mappedBy;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public Entity getTable1() {
         return table1;
@@ -24,7 +38,7 @@ public class Relation implements Entity {
 
     public String getType()
     {
-        return "Relation";
+        return this.type;
     }
 
     public String getCode()

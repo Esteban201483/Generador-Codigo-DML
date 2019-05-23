@@ -2,6 +2,7 @@ package Build;
 
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
+import javax.persistence.*;
 import javax.persistence.Column;
 import javax.xml.bind.ValidationException;
 import java.io.IOException;
@@ -15,6 +16,10 @@ import java.util.List;
  */
 public class ClassValidator {
     List<Class> projectClasses;
+    List<Relation> relationList;
+    boolean isRelation;
+    String mappedBy;
+    String secondRelation;
 
     /**
      * Constructor that receives the list with all the instances of classes with entity annotation
@@ -33,6 +38,8 @@ public class ClassValidator {
      */
     public List<Entity> startValidation() throws ValidationException
     {
+        this.relationList= new LinkedList<Relation>();
+
         //Stores database objects
         List<Entity> entityList = new LinkedList<Entity>();
         List<Build.Column> columnList = new LinkedList<Build.Column>();
@@ -59,6 +66,8 @@ public class ClassValidator {
             //Obtains all the fields
             for(Field field : fields){
                 columnRequired = false;
+                isRelation=false;
+                mappedBy="";
 
                 //Obtains all the annotations
                 System.out.println("New Field!");
@@ -97,10 +106,42 @@ public class ClassValidator {
                         System.out.println("Enumerated Found in column : " + newColumn.getName() + "!");
                         columnRequired = true;
                     }
+                    else if(annotation.annotationType().getSimpleName().equals("OneToOne"))
+                    {
+                        isRelation=true;
+                        OneToOne  oneToOne = (OneToOne) annotation;
+                        mappedBy=oneToOne.mappedBy();
+
+
+                    }
+                    else if(annotation.annotationType().getSimpleName().equals("OneToMany"))
+                    {
+                        isRelation=true;
+                        OneToMany oneToMany = (OneToMany) annotation;
+                        mappedBy=oneToMany.mappedBy();
+                    }
+                    else if(annotation.annotationType().getSimpleName().equals("ManyToOne"))
+                    {
+                        isRelation=true;
+                        ManyToOne manyToOne = (ManyToOne) annotation;
+                        //mappedBy=manyToOne.mappedBy();
+                    }
+                    else if(annotation.annotationType().getSimpleName().equals("ManyToMany"))
+                    {
+                        isRelation=true;
+                        ManyToMany manyToMany = (ManyToMany) annotation;
+                        mappedBy=manyToMany.mappedBy();
+                    }
+                    else if(annotation.annotationType().getSimpleName().equals("JoinColumn"))
+                    {
+                       JoinColumn joinColumn= (JoinColumn) annotation;
+                       secondRelation= joinColumn.table();
+                    }
                     else
                     {
                         throw new ValidationException("Error: Class " + projectClass.getName() +  " contains unknown " + annotation.annotationType().getSimpleName() + " annotation ");
                     }
+
                 }//Annotation search end
 
                 //Checks if some annotations requires the column annotation
@@ -119,6 +160,7 @@ public class ClassValidator {
                         }
                     }
                 } //Ends column required if
+
             }
 
             //All the table must have one and only one primary key
@@ -144,6 +186,13 @@ public class ClassValidator {
 
             newTable.setName(tableAnnotation.name());
             entityList.add(newTable);
+            if(isRelation)
+            {
+                Relation r= new Relation();
+                r.setMappedBy(mappedBy);
+                relationList.add(r);
+                r.setTable1(newTable);
+            }
 
         }
 
