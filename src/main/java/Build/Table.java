@@ -29,6 +29,7 @@ public class Table implements Entity {
      */
     public void setPrimaryKey(Column primaryKey) {
         this.primaryKey = primaryKey;
+        columnList.add(primaryKey);
     }
 
     public List<Column> getColumnList() {
@@ -88,7 +89,53 @@ public class Table implements Entity {
 
 
         System.out.println("Primary key: " + primaryKey.getName());
-        return "";
+
+        String code = "";
+        code += "CREATE TABLE " + name + "(\n";
+
+
+        for(Column c : columnList)
+        {
+            String tmpType = "";
+
+            if(c.getType().equals("int"))
+            {
+                tmpType += " INT";
+            }
+            else
+            {
+
+                if(c.getType().equals("class java.lang.String"))
+                {
+                    tmpType += " VARCHAR(" + c.getLength() + ")";
+                }
+                else if(c.getType().equals("float"))
+                {
+                    int precision = (c.getPrecision() == 0)? 16 : c.getPrecision();
+                    tmpType += " FLOAT(" + precision + ")";
+                }
+                else if(c.getType().equals("double"))
+                {
+                    int precision = (c.getPrecision() == 0)? 16 : c.getPrecision();
+                    tmpType += " DOUBLE(" + precision + ")";
+                }
+                else if(c.getType().equals("boolean"))
+                {
+                    int precision = (c.getPrecision() == 0)? 16 : c.getPrecision();
+                    tmpType += " BOOLEAN";
+                }
+
+            }
+
+            code += "\t" + c.getName() + tmpType + ",\n";
+        }
+
+        //Adds the PK field
+
+        code += "\tPRIMARY KEY(" + primaryKey.getName() +")\n";
+
+        code += ");\n\n";
+        return code;
     }
 
 }

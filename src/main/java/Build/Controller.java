@@ -58,9 +58,8 @@ public class Controller {
 
         System.out.println("Processing IR");
 
-
-        SQLScriptGeneratorImp mySQLGenerator = new SQLScriptGeneratorImp(IRList);
-
+        DataManager dataManager = new DataManager(dataBaseConfiguration,fileConfiguration, IRList);
+        dataManager.generateScript();
     }
 
 

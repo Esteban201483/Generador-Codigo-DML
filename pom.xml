@@ -28,10 +28,33 @@
             <artifactId>hibernate-annotations</artifactId>
             <version>3.5.6-Final</version>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.40</version>
+        </dependency>
+
 
     </dependencies>
 
+    <developers>
+    <developer>
+        <name> Esteban Rojas Solís</name>
+        <email> esteban201483@gmail.com</email>
+        <roles>
+            <role> Estudiante</role>
+        </roles>
+    </developer>
 
+        <developer>
+            <name> Joel Chaves Sequeira</name>
+            <email> joelchvs93@gmail.com</email>
+            <roles>
+                <role> Estudiante</role>
+            </roles>
+        </developer>
+
+    </developers>
 
 
 </project>

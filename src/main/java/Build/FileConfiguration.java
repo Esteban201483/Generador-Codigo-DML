@@ -1,5 +1,8 @@
 package Build;
 
+/**
+ * This class allows the user to specify the configuration of the output file.
+ */
 public class FileConfiguration extends Configuration{
     private String outputFile;
 

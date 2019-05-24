@@ -94,7 +94,8 @@ public class ClassValidator {
                         newColumn.setName(columnAnnotation.name());
                         newColumn.setScale("" + columnAnnotation.scale());
                         newColumn.setPrecision(columnAnnotation.precision());
-                        //Falta el tipo!!!
+                        newColumn.setType(field.getType().toString());
+
                         System.out.println("Column Found: " + columnAnnotation.name() + "!");
                         columnRequired = true;
                         columnName = columnAnnotation.name();

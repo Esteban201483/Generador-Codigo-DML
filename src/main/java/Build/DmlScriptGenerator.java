@@ -6,7 +6,7 @@ public class DmlScriptGenerator {
 
 
 
-    private List<Entity> entityList;
+    protected List<Entity> entityList;
 
     public DmlScriptGenerator(List<Entity> entityList)
     {
