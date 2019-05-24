@@ -1,5 +1,8 @@
 package Build;
 
+/**
+ * Contains the IR of a Relation
+ */
 public class Relation implements Entity {
 
     Entity table1;

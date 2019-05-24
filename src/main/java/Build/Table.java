@@ -6,6 +6,9 @@ package Build;
 
 import java.util.List;
 
+/**
+ * This class stores a table IR
+ */
 public class Table implements Entity {
 
     String name;
@@ -68,6 +71,10 @@ public class Table implements Entity {
     }
 
 
+    /**
+     * Generates a SQL code of the IR table. Calls its IR Columns get Code.
+     * @return The SQL code of the table
+     */
     public String getCode()
     {
         //Temporal: Returns IR (columns)

@@ -4,7 +4,7 @@ import javax.xml.bind.ValidationException;
 import java.util.List;
 
 /**
- * Controls all the process
+ * Principal class that controlls all the process of the project. Also, manages the IR list.
  */
 public class Controller {
 
@@ -64,6 +64,10 @@ public class Controller {
     }
 
 
+    /**
+     *
+     * @param projectClasses
+     */
     void  validateClasses(List<Class> projectClasses)
     {
         validator = new ClassValidator(projectClasses);
