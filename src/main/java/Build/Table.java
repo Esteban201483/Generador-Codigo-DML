@@ -29,6 +29,8 @@ public class Table implements Entity {
      */
     public void setPrimaryKey(Column primaryKey) {
         this.primaryKey = primaryKey;
+        primaryKey.setUnique(true);
+        primaryKey.setNullable(false);
         columnList.add(primaryKey);
     }
 
@@ -127,11 +129,17 @@ public class Table implements Entity {
 
             }
 
+            if(c.isUnique())
+                tmpType += " UNIQUE";
+            if(!c.isNullable())
+                tmpType += " NOT NULL";
+
             code += "\t" + c.getName() + tmpType + ",\n";
+
+
         }
 
         //Adds the PK field
-
         code += "\tPRIMARY KEY(" + primaryKey.getName() +")\n";
 
         code += ");\n\n";

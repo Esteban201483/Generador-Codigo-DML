@@ -12,6 +12,9 @@ public class Column {
     private boolean unique;
     private String scale;
     private int length;
+
+
+    private boolean nullable;
     Lob lobType;
 
     private int precision;
@@ -35,6 +38,7 @@ public class Column {
     public String getName() {
         return name;
     }
+
 
     public void setName(String name) {
         this.name = name;
@@ -88,5 +92,13 @@ public class Column {
         this.precision = precision;
     }
 
+
+    public boolean isNullable() {
+        return nullable;
+    }
+
+    public void setNullable(boolean nullable) {
+        this.nullable = nullable;
+    }
 
 }
