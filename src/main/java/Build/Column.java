@@ -7,17 +7,17 @@ enum Lob
 
 public class Column {
 
-    private String name;
-    private String type;
-    private boolean unique;
-    private String scale;
-    private int length;
+    protected String name;
+    protected String type;
+    protected boolean unique;
+    protected String scale;
+    protected int length;
 
 
-    private boolean nullable;
-    Lob lobType;
+    protected boolean nullable;
+    protected Lob lobType;
 
-    private int precision;
+    protected int precision;
 
     public Column()
     {

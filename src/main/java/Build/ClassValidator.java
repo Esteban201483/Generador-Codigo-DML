@@ -49,6 +49,7 @@ public class ClassValidator {
         int columnCounter;
         boolean columnRequired; //If a lob, enumerate or similar annotations appears, then a column annotation is mandatory
         boolean isPrimaryKey; //Allows to isolate the primary key from the other columns
+        boolean isForeignKey;
         Build.Column primaryKey = null;
 
         //Scan all the classes
@@ -70,6 +71,9 @@ public class ClassValidator {
                 columnRequired = false;
                 isRelation=false;
                 mappedBy="";
+
+                String referencedColumn = "";
+                isForeignKey = false;
 
                 //Obtains all the annotations
                 System.out.println("New Field!");
@@ -144,11 +148,13 @@ public class ClassValidator {
                     else if(annotation.annotationType().getSimpleName().equals("JoinColumn"))
                     {
                        JoinColumn joinColumn= (JoinColumn) annotation;
+                       referencedColumn = joinColumn.name();
                     }
                     else if(annotation.annotationType().getSimpleName().equals("JoinTable"))
                     {
                         JoinTable joinColumn= (JoinTable) annotation;
                         secondRelation= joinColumn.name();
+                        isForeignKey = true;
                     }
                     else
                     {
@@ -166,7 +172,16 @@ public class ClassValidator {
 
                         //Isolates the primaryKey from the other columns
                         if(!isPrimaryKey)
-                            columnList.add(newColumn);
+                            //Checks if the new column is a foreign key
+                            if(isForeignKey) {
+                                Build.ForeignKeyColumn newFKColumn =  new Build.ForeignKeyColumn(newColumn);
+                                    newFKColumn.setReferencedColumn(referencedColumn);
+                                    newFKColumn.setReferencedTable(secondRelation);
+                                columnList.add(newFKColumn);
+                            }
+                            else {
+                                columnList.add(newColumn);
+                            }
                         else {
                             primaryKey = newColumn;
                             isPrimaryKey = false;

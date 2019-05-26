@@ -80,19 +80,19 @@ public class Table implements Entity {
      */
     public String getCode()
     {
+        String code = "";
+        String foreignKeysCode = "";
+
         //Temporal: Returns IR (columns)
         System.out.println("------------------------- ");
         System.out.println("Table: " + name);
 
         for(Column c : columnList)
-        {
             System.out.println(c.getName()+ "length: " + c.getLength());
-        }
-
 
         System.out.println("Primary key: " + primaryKey.getName());
 
-        String code = "";
+
         code += "CREATE TABLE " + name + "(\n";
 
 
@@ -136,10 +136,19 @@ public class Table implements Entity {
 
             code += "\t" + c.getName() + tmpType + ",\n";
 
+            //If the column is a foreign key
+            if(c instanceof ForeignKeyColumn){
+                ForeignKeyColumn fc = (ForeignKeyColumn) c;
+
+                foreignKeysCode += "\tFOREIGN KEY (" + fc.getName() + ") REFERENCES " + fc.getReferencedTable() + "(" + fc.getReferencedColumn() + "),\n";
+
+            }
+
 
         }
 
         //Adds the PK field
+        code+=foreignKeysCode;
         code += "\tPRIMARY KEY(" + primaryKey.getName() +")\n";
 
         code += ");\n\n";
